@@ -1,20 +1,17 @@
 def solution(id_list, report, k):
     answer = []
-    reported_by = []  # 신고 당한 사람 리스트
-    pause_user = []  # 정지 당한 사람 리스트
-    report = list(set(report))
-    for i in report:
-        reported_by.append(i.split()[1])
+    a = list(set(report))
+    dictionary2 = {name: 0 for name in id_list}
+    dictionary = {name: [] for name in id_list}
+    for i in a:
+        dictionary[i.split()[1]].append(i.split()[0])
 
-    for j in id_list:
-        if reported_by.count(j) >= k:
-            pause_user.append(j)
+    for i in dictionary:
+        if len(dictionary[i]) >= k:
+            for j in dictionary[i]:
+                dictionary2[j] += 1
 
-    for a in id_list:
-        cnt = 0
-        for b in report:
-            if b.split()[1] in pause_user and a == b.split()[0]:
-                cnt += 1
-        answer.append(cnt)
+    for i in dictionary2:
+        answer.append(dictionary2[i])
 
     return answer
