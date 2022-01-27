@@ -2,24 +2,26 @@ from collections import deque
 
 
 def solution(priorities, location):
+    queue = deque([(i, j) for i, j in enumerate(priorities)])
+    find = queue[location]
+    queue.reverse()
     order = []
-    li = deque([str(i) + str(priorities[i]) for i in range(len(priorities))])
 
-    find = li[location]
-
-    li.reverse()
-    pri = deque(priorities)
-    pri.reverse()
-
-    while pri:
-        if pri[-1] < max(pri):
-            pri.appendleft(pri[-1])
-            pri.pop()
-            li.appendleft(li[-1])
-            li.pop()
+    while queue:
+        a = _max(queue)
+        if queue[-1][1] < a:
+            queue.appendleft(queue[-1])
+            queue.pop()
         else:
-            order.append(li[-1])
-            li.pop()
-            pri.pop()
+            order.append(queue[-1])
+            queue.pop()
 
     return order.index(find) + 1
+
+
+def _max(li):
+    maxx = 0
+    for i in li:
+        if i[1] > maxx:
+            maxx = i[1]
+    return maxx
