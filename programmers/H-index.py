@@ -1,18 +1,10 @@
 def solution(citations):
     answer = 0
-    h = sum(citations) // len(citations)
-
     citations.sort()
+    n = len(citations)
 
-    while True:
-        up = 0
-        for i in citations:
-            if i >= h:
-                up += 1
-        if up >= h:
-            answer = h
-            break
-
-        h -= 1
+    for i in range(n):
+        if citations[i] >= n-i:
+            return n-i
 
     return answer
